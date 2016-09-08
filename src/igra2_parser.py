@@ -38,8 +38,17 @@ class IGRA2Parser(object):
     def __init__(self):
         self._header = pandas.DataFrame(columns=self.HEADER_COLUMNS)
         self._data = []
-
+        self.length = 0
         return
+
+    def __len__(self):
+        return self.length
+
+    def get_header(self, i):
+        return self._header[i]
+
+    def get_data(self, i):
+        return self._data[i]
 
     def load(self, file_path):
         ''' load function
@@ -82,7 +91,8 @@ class IGRA2Parser(object):
 
         # set header index
         #self._header.index = pandas.to_datetime(parser._header[['YEAR','MONTH','DAY','HOUR']])
-        self._header.index = numpy.arange(len(self._header))
+        self.length = len(self._header)
+        self._header.index = numpy.arange(self.length)
         # logging
         if len(self._header) == len(self._data):
             logging.info('all {} records parsed'.format(len(records)-1))

@@ -15,6 +15,15 @@ or install it locally with:
 pip install --user git+https://github.com/coeusite/igra2_derived_parser.git
 ```
 
+Dependency
+------------------------------
+This module depends on:
+* pandas (0.18.1)
+* numpy (1.11.1)
+
+Please update these packages to the latest edition.
+
+
 Using
 ------------------------------
 Using the module should be pretty straightforward. Here's an example:
@@ -32,10 +41,15 @@ parser.load(file_path)
 print(parser.length)
 print(len(parser))
 
-# get the i-th record (i: 0-index)
+# get the i-th record, where i is zero-indexed.
 print(parser.get_header(i))
 print(parser.get_data(i))
 ```
+
+Developing
+--------------------------------
+Testing scripts have not been implemented yet.
+
 
 Contact
 --------------------------------

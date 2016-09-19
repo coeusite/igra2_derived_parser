@@ -76,7 +76,7 @@ class IGRA2Parser(object):
         # parsing to dataframes
         for i in range(1, len(records)):
             # print progress
-            if not(i % 100): logging.info('parsing the {}-th record'.format(i))
+            if not(i % 300): print('parsing the {}-th record'.format(i))
             # parse NaN
             record = records[i].replace('-99999', '    NA')
             # retreive header & data
@@ -95,7 +95,7 @@ class IGRA2Parser(object):
         self._header.index = numpy.arange(self.length)
         # logging
         if len(self._header) == len(self._data):
-            logging.info('all {} records parsed'.format(len(records)-1))
+            print('all {} records parsed'.format(len(records)-1))
         else:
             logging.error('The length of headers is NOT equal to the length of data!')
 

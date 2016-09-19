@@ -45,7 +45,7 @@ class IGRA2Parser(object):
         return self.length
 
     def get_header(self, i):
-        return self._header[i]
+        return self._header.loc[i, :]
 
     def get_data(self, i):
         return self._data[i]

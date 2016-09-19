@@ -4,7 +4,7 @@
 from distutils.core import setup
 
 setup(name='igra2_derived_parser',
-      version='0.0.1',
+      version='0.0.1.1',
       author_email='coeusite@gmail.com',
       description='Parser for NOAA IGRA2 Derived Files (for Python 3.5) ',
       author='coeusite',

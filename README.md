@@ -15,6 +15,11 @@ or install it locally with:
 pip install --user git+https://github.com/coeusite/igra2_derived_parser.git
 ```
 
+To upgrade the parser:
+```
+pip install --user --force-install --upgrade git+https://github.com/coeusite/igra2_derived_parser.git
+```
+
 Dependency
 ------------------------------
 This module depends on:
@@ -34,16 +39,20 @@ from igra2_derived_parser import IGRA2Parser
 # file path to a zip file or a plain text
 file_path = 'example/CHM00056187-drvd.txt.zip'
 
-parser = IGRA2Parser()
-parser.load(file_path)
+igra2_drvd_parser = IGRA2Parser()
+igra2_drvd_parser.load(file_path)
 
 # amount of records
-print(parser.length)
-print(len(parser))
+print(igra2_drvd_parser.length)
+print(len(igra2_drvd_parser))
 
 # get the i-th record, where i is zero-indexed.
-print(parser.get_header(i))
-print(parser.get_data(i))
+print(igra2_drvd_parser.get_header(i))
+print(igra2_drvd_parser.get_data(i))
+
+# you can access the data directly by:
+igra2_drvd_parser._data[i]
+igra2_drvd_parser._header.loc[i, :]
 ```
 
 Developing

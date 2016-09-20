@@ -7,7 +7,7 @@ import logging
 import zipfile
 from os.path import basename, splitext
 # string => StringIO => pandas.Dataframe
-import pandas, numpy
+import pandas as pd #, numpy as np
 try:
     from StringIO import StringIO
 except ImportError:
@@ -36,7 +36,7 @@ class IGRA2Parser(object):
     )
 
     def __init__(self):
-        self._header = pandas.DataFrame(columns=self.HEADER_COLUMNS)
+        self._header = pd.DataFrame(columns=self.HEADER_COLUMNS)
         self._data = []
         self.length = 0
         return
@@ -48,6 +48,8 @@ class IGRA2Parser(object):
         return self._header.loc[i, :]
 
     def get_data(self, i):
+        if np.isnan(i): return None
+        if instance(i, float): i = int(i)
         return self._data[i]
 
     def load(self, file_path):
@@ -81,18 +83,18 @@ class IGRA2Parser(object):
             record = records[i].replace('-99999', '    NA')
             # retreive header & data
             [header, data] = record.split('\n', 1)
-            header = pandas.read_csv(StringIO(header), header=None, index_col=None, delim_whitespace=True)
+            header = pd.read_csv(StringIO(header), header=None, index_col=None, delim_whitespace=True)
             header.columns = self.HEADER_COLUMNS
-            data = pandas.read_csv(StringIO(data), header=None, index_col=None, delim_whitespace=True)
+            data = pd.read_csv(StringIO(data), header=None, index_col=None, delim_whitespace=True)
             data.columns = self.DATA_COLUMNS
             data.index = data.PRESS
             self._header = self._header.append(header)
             self._data.append(data)
 
         # set header index
-        #self._header.index = pandas.to_datetime(parser._header[['YEAR','MONTH','DAY','HOUR']])
+        #self._header.index = pd.to_datetime(self._header[['YEAR','MONTH','DAY','HOUR']])
         self.length = len(self._header)
-        self._header.index = numpy.arange(self.length)
+        self._header.index = range(self.length)
         # logging
         if len(self._header) == len(self._data):
             print('all {} records parsed'.format(len(records)-1))

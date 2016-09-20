@@ -17,7 +17,7 @@ pip install --user git+https://github.com/coeusite/igra2_derived_parser.git
 
 To upgrade the parser:
 ```
-pip install --user --force-install --upgrade git+https://github.com/coeusite/igra2_derived_parser.git
+pip install --user --force-reinstall --upgrade git+https://github.com/coeusite/igra2_derived_parser.git
 ```
 
 Dependency

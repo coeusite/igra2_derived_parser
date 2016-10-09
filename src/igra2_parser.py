@@ -54,7 +54,7 @@ class IGRA2Parser(object):
 
         '''
         if np.isnan(i): return None
-        if instance(i, float): i = int(i)
+        if isinstance(i, float): i = int(i)
         return self._data[i]
 
     def get_dew_point(self, i):

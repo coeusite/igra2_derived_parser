@@ -7,7 +7,7 @@ import logging
 import zipfile
 from os.path import basename, splitext
 # string => StringIO => pandas.Dataframe
-import pandas as pd #, numpy as np
+import pandas as pd, numpy as np
 try:
     from StringIO import StringIO
 except ImportError:
@@ -48,9 +48,42 @@ class IGRA2Parser(object):
         return self._header.loc[i, :]
 
     def get_data(self, i):
+        ''' get_data functions
+
+            if i is NaN, then return None. if i is float, then convert i to an integer.
+
+        '''
         if np.isnan(i): return None
         if instance(i, float): i = int(i)
         return self._data[i]
+
+    def get_dew_point(self, i):
+        ''' get_dew_point functions
+
+            calculate the dew point by the Bögel modification
+
+        '''
+        # get data
+        data = self.get_data(i)
+        temperature = data['TEMP'] / 10
+        humidity =  data['CALCRH'] / 10
+        vapor_pressure = data['VAPPRESS'] / 1000
+        # set parameters according to Arden Buck
+        parameters = pd.DataFrame(index = data.index, columns=['a','b','c'])
+        # T >= 273.15K
+        index = (temperature >= 273.15) & (temperature <= 273.15 + 50)
+        parameters.loc[index, 'a'] = 6.1211
+        parameters.loc[index, 'b'] = 17.368
+        parameters.loc[index, 'c'] = 238.88
+        # T < 273.15K
+        index = (temperature < 273.15) & (temperature >= 273.15 - 40)
+        parameters.loc[index, 'a'] = 6.1211
+        parameters.loc[index, 'b'] = 17.966
+        parameters.loc[index, 'c'] = 247.15
+        # calculate by the Arden Buck equation
+        tmp = np.log( np.array(vapor_pressure / parameters.a, dtype=np.float))
+        return parameters.c * tmp / (parameters.b - tmp)
+
 
     def load(self, file_path):
         ''' load function

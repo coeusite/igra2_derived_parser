@@ -50,6 +50,9 @@ print(len(igra2_drvd_parser))
 print(igra2_drvd_parser.get_header(i))
 print(igra2_drvd_parser.get_data(i))
 
+# get dew point for the i-th record
+print(igra2_drvd_parser.get_dew_point(i))
+
 # you can access the data directly by:
 igra2_drvd_parser._data[i]
 igra2_drvd_parser._header.loc[i, :]

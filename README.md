@@ -37,7 +37,7 @@ Using the module should be pretty straightforward. Here's an example:
 from igra2_derived_parser import IGRA2Parser
 
 # file path to a zip file or a plain text
-file_path = 'example/CHM00056187-drvd.txt.zip'
+file_path = 'examples/CHM00056187-drvd.txt.zip'
 
 igra2_drvd_parser = IGRA2Parser()
 igra2_drvd_parser.load(file_path)
